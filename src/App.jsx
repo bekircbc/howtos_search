@@ -6,17 +6,16 @@ const howtosUrl = "https://edwardtanguay.netlify.app/share/howtos.json";
 export const App = () => {
   const [howtos, setHowtos] = useState([]);
 
-  useEffect(() => {
-    const getReactHowtos = (_howtos, category = "react") => {
-      return _howtos.filter(
-        (m) => m.category.toLowerCase() === category.toLowerCase()
-      );
-    };
+  const getHowtos = (_howtos, category = "react") => {
+    return _howtos.filter(
+      (m) => m.category.toLowerCase() === category.toLowerCase()
+    );
+  };
 
+  useEffect(() => {
     (async () => {
       const response = await fetch(howtosUrl);
-      let _howtos = await response.json();
-      _howtos = getReactHowtos(_howtos, "react");
+      const _howtos = await response.json();
       setHowtos(_howtos);
     })();
   }, []);
@@ -24,9 +23,11 @@ export const App = () => {
   return (
     <div className="App">
       <h2>Fetch, filter and display data from an API</h2>
-      <div>There are {howtos.length} React howtos.</div>
+      <div>
+        There are {getHowtos(howtos, "react").length} Howtos in this subject.
+      </div>
       <ul>
-        {howtos.map((howto, index) => {
+        {getHowtos(howtos, "react").map((howto, index) => {
           return (
             <li key={index}>
               <a

@@ -7,7 +7,7 @@ export const App = () => {
   const [howtos, setHowtos] = useState([]);
   const [fieldInput, setFieldInput] = useState([]);
 
-  const getHowtos = (_howtos, category = "react") => {
+  const getHowtos = (_howtos, category) => {
     return _howtos.filter(
       (m) => m.category.toLowerCase() === category.toLowerCase()
     );
@@ -32,6 +32,7 @@ export const App = () => {
       <h2>Fetch, filter and display data from an API</h2>
 
       <div className="inputField">
+        <label className="labelHowtoSearch">Search in Howtos : </label>
         <input
           value={fieldInput}
           onChange={handleFieldInput}

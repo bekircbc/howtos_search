@@ -7,10 +7,6 @@ export const App = () => {
   const [howtos, setHowtos] = useState([]);
   const [fieldInput, setFieldInput] = useState([]);
 
-  const handleFieldInput = (e) => {
-    setFieldInput(e.target.value);
-  };
-
   const getHowtos = (_howtos, category = "react") => {
     return _howtos.filter(
       (m) => m.category.toLowerCase() === category.toLowerCase()
@@ -21,20 +17,20 @@ export const App = () => {
     (async () => {
       const response = await fetch(howtosUrl);
       const _howtos = await response.json();
+      setFieldInput("react");
+      getHowtos(_howtos, fieldInput);
       setHowtos(_howtos);
     })();
   }, []);
 
+  const handleFieldInput = (e) => {
+    setFieldInput(e.target.value);
+  };
+
   return (
     <div className="App">
       <h2>Fetch, filter and display data from an API</h2>
-      <div>
-        There are{" "}
-        {fieldInput !== ""
-          ? getHowtos(howtos, fieldInput).length
-          : getHowtos(howtos, "react").length}{" "}
-        Howtos.
-      </div>
+
       <div className="inputField">
         <input
           value={fieldInput}
@@ -45,6 +41,7 @@ export const App = () => {
           placeholder="Search Howtos"
         />
       </div>
+      <div>There are {getHowtos(howtos, fieldInput).length} Howtos.</div>
       <ul>
         {getHowtos(howtos, fieldInput).map((howto, index) => {
           return (

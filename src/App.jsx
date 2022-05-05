@@ -5,6 +5,11 @@ const howtosUrl = "https://edwardtanguay.netlify.app/share/howtos.json";
 
 export const App = () => {
   const [howtos, setHowtos] = useState([]);
+  const [fieldInput, setFieldInput] = useState([]);
+
+  const handleFieldInput = (e) => {
+    setFieldInput(e.target.value);
+  };
 
   const getHowtos = (_howtos, category = "react") => {
     return _howtos.filter(
@@ -24,10 +29,24 @@ export const App = () => {
     <div className="App">
       <h2>Fetch, filter and display data from an API</h2>
       <div>
-        There are {getHowtos(howtos, "react").length} Howtos in this subject.
+        There are{" "}
+        {fieldInput !== ""
+          ? getHowtos(howtos, fieldInput).length
+          : getHowtos(howtos, "react").length}{" "}
+        Howtos.
+      </div>
+      <div className="inputField">
+        <input
+          value={fieldInput}
+          onChange={handleFieldInput}
+          autoFocus
+          type="text"
+          id="inputField"
+          placeholder="Search Howtos"
+        />
       </div>
       <ul>
-        {getHowtos(howtos, "react").map((howto, index) => {
+        {getHowtos(howtos, fieldInput).map((howto, index) => {
           return (
             <li key={index}>
               <a

@@ -5,7 +5,7 @@ const howtosUrl = "https://edwardtanguay.netlify.app/share/howtos.json";
 
 export const App = () => {
   const [howtos, setHowtos] = useState([]);
-  const [fieldInput, setFieldInput] = useState([]);
+  const [fieldInput, setFieldInput] = useState("react");
 
   const getHowtos = (_howtos, category) => {
     return _howtos.filter(
@@ -17,7 +17,6 @@ export const App = () => {
     (async () => {
       const response = await fetch(howtosUrl);
       const _howtos = await response.json();
-      setFieldInput("react");
       getHowtos(_howtos, fieldInput);
       setHowtos(_howtos);
     })();
